@@ -1,4 +1,4 @@
-import React from 'react'
+import React , { Fragment } from 'react'
 import { Layout, Menu, Breadcrumb, Icon, Dropdown ,Avatar, message} from 'antd';
 import '../../App.css'
 import { adminRoutes } from '../../routes/index'
@@ -7,7 +7,7 @@ import './index.css'
 const route = adminRoutes.filter(route=> route.isShow)
 const { Header, Content,  Sider } = Layout;
 // import {clearToken} from '../../utils/auth'
-// const { SubMenu } = Menu;
+const { SubMenu } = Menu;
 
 function Index(props){
     const popMenu = (
@@ -23,6 +23,24 @@ function Index(props){
             <Menu.Item key='logOut'>退出</Menu.Item>
         </Menu>
     )
+
+    const renderSubMenu = (item)=>{
+        return (
+            <SubMenu key={item.key}  title={item.title}>
+                {
+                    item.children&& item.children.map((data)=>{
+                        return (
+                            data.children && data.children.length > 0 ? renderSubMenu(data) : renderMenu(data)
+                        )
+                    })
+                }
+            </SubMenu>
+        )
+    }
+    const renderMenu = (item)=>{
+        return <Menu.Item key={ item.path } >  { item.title }</Menu.Item>
+    }
+
     return(
         <div>
             <Layout>
@@ -49,10 +67,8 @@ function Index(props){
             style={{ height: '100%' }}
           >
                 {
-                    route.map((route)=>{
-                           return (
-                               <Menu.Item key={route.path} path={route.path} onClick = { (route)=>{ props.history.push(route.key) } } ><Icon type={route.icon}></Icon>{route.title}</Menu.Item >
-                           ) 
+                    route.map((item)=>{
+                           return item.children&&item.children.length > 0 ? renderSubMenu(item) : renderMenu(item)
                     })
                 }
           </Menu>

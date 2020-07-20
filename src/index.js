@@ -13,10 +13,16 @@ ReactDOM.render(
           <Route path='/admin' render = { (routeProps) => <App {...routeProps} />}></Route>
           {
             mainRoutes.map((route)=>{
-                 return < Route key = {route.path}  path={route.path} component={route.component} /> 
+                 return < Route 
+                            key = {route.path}  
+                            path={route.path} 
+                            component={route.component} > 
+                            
+
+                        </ Route>    
             })
           }  
-          <Redirect to='/404' component={PageNotFound }></Redirect>  
+          <Redirect to='/login' component={PageNotFound }></Redirect>  
       </Switch>
   </Router>,
   document.getElementById('root')

@@ -6,6 +6,7 @@ import Login from '../pages/Login'
 import Index from '../pages/admin/dashboard'
 import List from '../pages/admin/product/List'
 import Edit from '../pages/admin/product/Edit'
+import Other from '../pages/admin/other/other'
 import PageNotFound from '../pages/PageNotFound'
 
 export const mainRoutes = [
@@ -37,6 +38,16 @@ export const adminRoutes = [
     {
         path:'/admin/product/:id?',
         component : Edit
+    },
+    {
+        path:'/admin/other',
+        component : Other,
+        title:'其他',
+        isShow:true,
+        icon:'shop',
+        children: [
+            {key: '/page/AlertDemo', title: '弹出框', icon: ''},
+        ]
     }
 ]
 
