@@ -1,25 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
+import 'antd/dist/antd.css'
 import './App.css';
+import { adminRoutes } from './routes/index'
+import {  Route,Switch,Redirect } from 'react-router-dom'
+import PageNotFound from './pages/PageNotFound';
+import Frame from './components/frame/index'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Frame>
+        <Switch>
+            {
+              adminRoutes.map((route)=>{
+                return <Route 
+                        exact = {route.exact} 
+                        key={route.path} 
+                        path={route.path} 
+                        component={route.component}
+                        //  render={
+                        //     (routeProps=>{
+                        //         return <route.component {...routeProps} />
+                        //     })
+                        //   }  
+                       />
+              })
+            }
+
+            <Redirect to={adminRoutes[0].path} from='/admin'   />
+            <Redirect to='/404' component = { PageNotFound } />
+        </Switch>
+    </Frame>
   );
 }
 
